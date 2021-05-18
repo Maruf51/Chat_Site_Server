@@ -38,49 +38,49 @@ app.use(fileUpload({
 //   }
 // })
 
-let users = []
+// let users = []
 
-const addUser = (userId, socketId) => {
-  !users.some((user) => user.userId === socketId) &&
-    users.push({userId, socketId})
-}
+// const addUser = (userId, socketId) => {
+//   !users.some((user) => user.userId === socketId) &&
+//     users.push({userId, socketId})
+// }
 
-const removeUser = (socketId) => {
-  users = users.filter(user => user.socketId !== socketId)
-}
+// const removeUser = (socketId) => {
+//   users = users.filter(user => user.socketId !== socketId)
+// }
 
-const getUser = (userId) => {
-  return users.find((user) => user.userId === userId);
-};
+// const getUser = (userId) => {
+//   return users.find((user) => user.userId === userId);
+// };
 
-io.on('connection', (socket) => {
-  // when connect
-  console.log('a user connected')
-  // adding user to socket server
-  socket.on('addUser', (userId) => {
-    addUser(userId, socket.id)
-    io.emit('getSocketUsers', users)
-  })
+// io.on('connection', (socket) => {
+//   // when connect
+//   console.log('a user connected')
+//   // adding user to socket server
+//   socket.on('addUser', (userId) => {
+//     addUser(userId, socket.id)
+//     io.emit('getSocketUsers', users)
+//   })
 
-  //send and get message
-  socket.on("sendMessage", ({ messageId, sendId, receiverId, message }) => {
-    const user = getUser(receiverId);
-    if (user) {
-      io.to(user.socketId).emit("getMessage", {
-        sendId,
-        messageId,
-        message,
-      });
-    }
-  });
+//   //send and get message
+//   socket.on("sendMessage", ({ messageId, sendId, receiverId, message }) => {
+//     const user = getUser(receiverId);
+//     if (user) {
+//       io.to(user.socketId).emit("getMessage", {
+//         sendId,
+//         messageId,
+//         message,
+//       });
+//     }
+//   });
 
-  // when disconnect
-  socket.on('disconnect', () => {
-    console.log('a user disconnected')
-    removeUser(socket.id)
-    io.emit('getSocketUsers', users)
-  })
-})
+//   // when disconnect
+//   socket.on('disconnect', () => {
+//     console.log('a user disconnected')
+//     removeUser(socket.id)
+//     io.emit('getSocketUsers', users)
+//   })
+// })
 
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASS}@cluster0.xxb2u.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
