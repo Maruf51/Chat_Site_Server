@@ -9,14 +9,14 @@ const querystring = require('querystring');
 require('dotenv').config();
 
 const app = express()
-const http = require('http');
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:3000"
-  }
-});
+// const http = require('http');
+// const server = http.createServer(app);
+// const { Server } = require("socket.io");
+// const io = new Server(server, {
+//   cors: {
+//     origin: "http://localhost:3000"
+//   }
+// });
 
 
 
@@ -178,7 +178,7 @@ client.connect(err => {
   })
 })
 
-server.listen(5000, () => {
-  console.log('listening on *:5000');
-});
-// app.listen(PORT)
+// server.listen(5000, () => {
+//   console.log('listening on *:5000');
+// });
+app.listen(process.env.PORT || 5000)
