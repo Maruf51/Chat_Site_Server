@@ -5,11 +5,11 @@ const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 app.use(cors({
-    origin: "http://localhost:3000"
-  }))
+  cors: "103.112.55.34"
+}))
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000"
+    origin: "103.112.55.34"
   }
 });
 
