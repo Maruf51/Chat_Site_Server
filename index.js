@@ -14,7 +14,7 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
-    origin: "https://realtime-chat-site.web.app"
+    origin: "http://localhost:3000"
   }
 });
 
