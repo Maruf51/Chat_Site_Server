@@ -127,6 +127,19 @@ client.connect(err => {
     
     // .then(result => res.send(result.modifiedCount))
   })
+
+  app.patch('/add-conversation-to-top',(req, res)=>{
+    const body = req.body;
+    const {id, data} = body;
+    // console.log(id, data)
+      usersCollection.updateOne(
+        { _id: ObjectId(id) },
+        {
+          $set: { messages: data},
+        }
+    )
+    .then(result => res.send(result.modifiedCount))
+  })
 })
 
 client.connect(err => {
