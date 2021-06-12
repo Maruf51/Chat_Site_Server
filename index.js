@@ -198,9 +198,6 @@ client.connect(err => {
         )
       })
       
-    // const {status} = body;
-    
-    // .then(result => res.send(result.modifiedCount))
   })
 })
 
