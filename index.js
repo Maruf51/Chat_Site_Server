@@ -8,6 +8,7 @@ const ObjectId = require('mongodb').ObjectID;
 const querystring = require('querystring');
 require('dotenv').config();
 
+
 const app = express()
 const http = require('http');
 const server = http.createServer(app);
@@ -17,6 +18,11 @@ const io = new Server(server, {
     origin: "https://realtime-chat-site.web.app"
   }
 });
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  });
 
 
 const PORT = process.env.PORT || 5000
@@ -46,8 +52,8 @@ const removeUser = (socketId) => {
   users = users.filter(user => user.socketId !== socketId)
 }
 
-const getUser = (userId) => {
-  return users.find((user) => user.userId === userId);
+const getUser = (userID) => {
+  return users.find((user) => user.userId === userID);
 };
 
 io.on('connection', (socket) => {
@@ -59,7 +65,7 @@ io.on('connection', (socket) => {
     io.emit('getSocketUsers', users)
   })
 
-  //send and get message
+  // send and get message
   socket.on("sendMessage", ({ messageId, sendId, receiverId, message }) => {
     const user = getUser(receiverId);
     if (user) {
@@ -70,6 +76,20 @@ io.on('connection', (socket) => {
       });
     }
   });
+
+  // Start New Conversation
+  socket.on("newConversation", (userID) => {
+    const user = getUser(userID.userID)
+    console.log(userID);
+    console.log(users)
+    console.log(user)
+    if (user) {
+      io.to(user.socketId).emit("startConversation", {
+        userID,
+        startConversation: true
+      })
+    }
+  })
 
   // when disconnect
   socket.on('disconnect', () => {
@@ -100,6 +120,7 @@ client.connect(err => {
     .toArray( (err, documents) => {
         res.send(documents)
     })
+    .catch(err => console.log(err))
   })
 
   app.patch('/user-message-update/id',(req, res)=>{
