@@ -18,11 +18,6 @@ const io = new Server(server, {
     origin: "https://realtime-chat-site.web.app"
   }
 });
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  });
 
 
 const PORT = process.env.PORT || 5000
