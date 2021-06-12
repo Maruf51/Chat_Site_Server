@@ -115,7 +115,7 @@ client.connect(err => {
     .toArray( (err, documents) => {
         res.send(documents)
     })
-    .catch(err => console.log(err))
+    // .catch(err => console.log(err))
   })
 
   app.patch('/user-message-update/id',(req, res)=>{
