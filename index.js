@@ -15,14 +15,14 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
-    origin: "https://realtime-chat-site.web.app"
+    origin: "*"
   }
 });
 
 
 const PORT = process.env.PORT || 5000
 
-app.use(cors({origin: "https://realtime-chat-site.web.app"}))
+app.use(cors({origin: "*"}))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('service'))
