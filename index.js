@@ -22,7 +22,7 @@ const io = new Server(server, {
 
 const PORT = process.env.PORT || 5000
 
-app.use(cors({origin: "*"}))
+app.use(cors({origin: "https://realtime-chat-site.web.app"}))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('service'))
